@@ -1,6 +1,6 @@
-import 'class_generator.dart';
-import 'dto_field.dart';
-import 'string_extension.dart';
+import 'package:dtogen/src/class_generator.dart';
+import 'package:dtogen/src/dto_field.dart';
+import 'package:dtogen/src/string_extension.dart';
 
 class EntityGenerator extends ClassGenerator {
   EntityGenerator({
@@ -19,8 +19,10 @@ class EntityGenerator extends ClassGenerator {
     if (generateImports) {
       writeImport(buffer, import: "package:equatable/equatable.dart");
       if (addCopyWith) {
-        writeImport(buffer,
-            import: "package:copy_with_extension/copy_with_extension.dart");
+        writeImport(
+          buffer,
+          import: "package:copy_with_extension/copy_with_extension.dart",
+        );
         writeLine(buffer);
         writePart(buffer, import: "${className.camelCaseToSnakeCase()}.g.dart");
       }

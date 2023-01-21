@@ -81,7 +81,7 @@ class MyHomePage extends HookWidget {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: TextField(
                       controller: inputController,
                       decoration: decoration.copyWith(labelText: 'Input'),
@@ -92,7 +92,7 @@ class MyHomePage extends HookWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Stack(
                       children: [
                         TextField(

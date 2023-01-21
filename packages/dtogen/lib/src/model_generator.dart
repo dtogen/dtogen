@@ -1,9 +1,9 @@
-import 'class_generator.dart';
-import 'dto_class_generator.dart';
-import 'dto_field.dart';
-import 'entity_generator.dart';
-import 'generated_models_result.dart';
-import 'string_extension.dart';
+import 'package:dtogen/src/class_generator.dart';
+import 'package:dtogen/src/dto_class_generator.dart';
+import 'package:dtogen/src/dto_field.dart';
+import 'package:dtogen/src/entity_generator.dart';
+import 'package:dtogen/src/generated_models_result.dart';
+import 'package:dtogen/src/string_extension.dart';
 
 class ModelGenerator {
   ModelGenerator({
@@ -37,8 +37,10 @@ class ModelGenerator {
     );
   }
 
-  List<ClassGenerator> _createClassGenerators(Json json,
-      [String? initialClassName]) {
+  List<ClassGenerator> _createClassGenerators(
+    Json json, [
+    String? initialClassName,
+  ]) {
     return _parseClasses(json, initialClassName ?? "Generated").toList();
   }
 
@@ -94,14 +96,16 @@ class ModelGenerator {
   /// ```
   String _addPrefixWithoutDuplications(String className) {
     final prefix = classNamePrefix;
-    if (prefix == null) return className;
+    if (prefix == null) {
+      return className;
+    }
 
     final prefixParts = prefix.splitByUpperCase();
     if (prefixParts.length == 1) {
       if (className.startsWith(prefix)) {
         return className;
       } else {
-        "$prefix$className";
+        return "$prefix$className";
       }
     }
 
@@ -116,7 +120,9 @@ class ModelGenerator {
   }
 
   List<ClassField> _parseClassFields(
-      Json json, Set<ClassGenerator> generatedClasses) {
+    Json json,
+    Set<ClassGenerator> generatedClasses,
+  ) {
     return json //
         .entries
         .map((entry) => _parseField(entry.key, entry.value, generatedClasses))

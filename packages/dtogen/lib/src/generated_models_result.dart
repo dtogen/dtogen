@@ -1,5 +1,5 @@
-import 'dto_class_generator.dart';
-import 'entity_generator.dart';
+import 'package:dtogen/src/dto_class_generator.dart';
+import 'package:dtogen/src/entity_generator.dart';
 
 class GeneratedModelsResult {
   const GeneratedModelsResult({

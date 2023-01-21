@@ -1,6 +1,6 @@
-import 'class_generator.dart';
-import 'dto_field.dart';
-import 'string_extension.dart';
+import 'package:dtogen/src/class_generator.dart';
+import 'package:dtogen/src/dto_field.dart';
+import 'package:dtogen/src/string_extension.dart';
 
 class DtoGenerator extends ClassGenerator {
   const DtoGenerator({
@@ -24,8 +24,10 @@ class DtoGenerator extends ClassGenerator {
   @override
   void generateClass(StringBuffer buffer) {
     if (generateImports) {
-      writeImport(buffer,
-          import: "package:json_annotation/json_annotation.dart");
+      writeImport(
+        buffer,
+        import: "package:json_annotation/json_annotation.dart",
+      );
       writeLine(buffer);
       writePart(buffer, import: "${className.camelCaseToSnakeCase()}.g.dart");
       writeLine(buffer);
@@ -116,7 +118,8 @@ class DtoGenerator extends ClassGenerator {
 
   void _writeFromJsonConstructor(StringBuffer buffer) {
     buffer.writeln(
-        "  factory $className.fromJson($_jsonType json) => _\$${className}FromJson(json);");
+      "  factory $className.fromJson($_jsonType json) => _\$${className}FromJson(json);",
+    );
   }
 
   void _writeToJsonMethod(StringBuffer buffer) {

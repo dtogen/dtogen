@@ -41,7 +41,8 @@ ${argsParser.usage}""",
     final json = jsonDecode(jsonString);
     if (json is! Json) {
       print(
-          "Json's top-level structure supposed to be a Map but given is ${json.runtimeType}");
+        "Json's top-level structure supposed to be a Map but given is ${json.runtimeType}",
+      );
       exit(1);
     }
     final modelsGenerator = ModelGenerator(
@@ -60,6 +61,6 @@ ${argsParser.usage}""",
       splitByFiles: shouldSplitByFiles,
       pathToOutput: pathToOutput,
     );
-    outputGenerator.generateOutput();
+    return outputGenerator.generateOutput();
   }
 }

@@ -1,6 +1,5 @@
+import 'package:dtogen/src/dto_field.dart';
 import 'package:meta/meta.dart';
-
-import 'dto_field.dart';
 
 abstract class ClassGenerator {
   const ClassGenerator({

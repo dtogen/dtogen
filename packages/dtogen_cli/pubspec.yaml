@@ -17,5 +17,6 @@ dependencies:
       path: packages/dtogen
 
 dev_dependencies:
-  lints: ^2.0.0
+  dtogen_lints:
+    path: ../dtogen_lints
   test: ^1.16.0
