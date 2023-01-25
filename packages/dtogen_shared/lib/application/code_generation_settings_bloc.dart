@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:convenient_architecture/convenient_architecture.dart';
-import 'package:dtogen_storage/domain/i_code_generation_settings_repository.dart';
-import 'package:dtogen_storage/domain/code_generation_settings.dart';
+import 'package:dtogen_shared/domain/code_generation_settings.dart';
+import 'package:dtogen_shared/domain/i_code_generation_settings_repository.dart';
 
 part 'code_generation_settings_bloc_part.dart';
 
@@ -13,22 +13,26 @@ class CodeGenerationSettingsBloc extends Bloc<CodeGenerationSettingsEvent, CodeG
 
   final ICodeGenerationSettingsRepository _repository;
 
-  void _onLoadSettings(_LoadSettings _, _Emitter emit) async {
-    emit(CodeGenerationSettingsState.inProgress());
+  Future<void> _onLoadSettings(_LoadSettings _, _Emitter emit) async {
+    emit(const CodeGenerationSettingsState.inProgress());
     final result = await _repository.getSettings();
-    emit(result.fold(
-      CodeGenerationSettingsState.failure,
-      CodeGenerationSettingsState.success,
-    ));
+    emit(
+      result.fold(
+        CodeGenerationSettingsState.failure,
+        CodeGenerationSettingsState.success,
+      ),
+    );
   }
 
-  void _onUpdateSettings(_UpdateSettings event, _Emitter emit) async {
-    emit(CodeGenerationSettingsState.inProgress());
+  Future<void> _onUpdateSettings(_UpdateSettings event, _Emitter emit) async {
+    emit(const CodeGenerationSettingsState.inProgress());
     final result = await _repository.saveSettings(event.settings);
-    emit(result.match(
-      CodeGenerationSettingsState.failure,
-      () => const CodeGenerationSettingsState.success(null),
-    ));
+    emit(
+      result.match(
+        CodeGenerationSettingsState.failure,
+        () => const CodeGenerationSettingsState.success(null),
+      ),
+    );
   }
 }
 

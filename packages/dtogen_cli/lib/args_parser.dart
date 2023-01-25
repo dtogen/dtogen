@@ -8,7 +8,6 @@ const noToEntity = "no-to-entity";
 const noCopy = "no-copy";
 const input = "input";
 const output = "output";
-const initialClassName = "init-class";
 const prefix = "prefix";
 const help = "help";
 const splitByFiles = "split-by-files";
@@ -37,11 +36,6 @@ ArgParser describeArguments() {
     )
     ..addOption(input, abbr: "i", help: "Path to the json file")
     ..addOption(output, abbr: "o", help: "Path to the output dart file. Prints to console if not specified")
-    ..addOption(
-      initialClassName,
-      help: "Name of the root model",
-      defaultsTo: "Generated",
-    )
     ..addOption(
       prefix,
       abbr: "p",

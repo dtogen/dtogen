@@ -1,4 +1,4 @@
-name: dtogen_storage
+name: dtogen_shared
 description: A sample command-line application.
 version: 0.1.0
 publish_to: "none"
@@ -14,5 +14,6 @@ dependencies:
   hive: ^2.2.3
 
 dev_dependencies:
-  lints: ^2.0.0
+  dtogen_lints:
+    path: ../dtogen_lints
   test: ^1.16.0

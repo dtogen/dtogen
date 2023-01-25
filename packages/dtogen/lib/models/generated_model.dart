@@ -17,5 +17,8 @@ class GeneratedModel {
 
 enum ModelType {
   entity,
-  dto,
+  dto;
+
+  bool get isEntity => this == ModelType.entity;
+  bool get isDto => this == ModelType.dto;
 }

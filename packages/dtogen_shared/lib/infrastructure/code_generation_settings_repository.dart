@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:convenient_architecture/convenient_architecture.dart';
-import 'package:dtogen_storage/domain/i_code_generation_settings_repository.dart';
-import 'package:dtogen_storage/infrastructure/code_generation_settings_adapter.dart';
-import 'package:dtogen_storage/domain/code_generation_settings.dart';
+import 'package:dtogen_shared/domain/code_generation_settings.dart';
+import 'package:dtogen_shared/domain/i_code_generation_settings_repository.dart';
+import 'package:dtogen_shared/infrastructure/code_generation_settings_adapter.dart';
 import 'package:hive/hive.dart';
 
 class CodeGenerationSettingsRepository extends ICodeGenerationSettingsRepository {

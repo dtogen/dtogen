@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dtogen/dtogen.dart';
 import 'package:dtogen_cli/args_parser.dart';
 import 'package:dtogen_cli/output_generator.dart';
+import 'package:dtogen_shared/dtogen_storage.dart';
 
 Future<void> runDtoGenCli(List<String> arguments) async {
   final argsParser = describeArguments();
@@ -26,7 +27,6 @@ ${argsParser.usage}""",
   if (pathToJson == null) {
     throw Exception("Path to the JSON file must be specified");
   }
-  final String initClassName = parsedArgs[initialClassName];
   final generateEntity = !parsedArgs[noEntity];
   final shouldSplitByFiles = parsedArgs[splitByFiles];
   final String? pathToOutput = parsedArgs[output];
@@ -45,17 +45,45 @@ ${argsParser.usage}""",
       );
       exit(1);
     }
-    final modelsGenerator = ModelGenerator(
-      generateFromJson: !parsedArgs[noFromJson],
-      generateToJson: !parsedArgs[noToJson],
-      generateEntity: generateEntity,
-      generateFromEntity: !parsedArgs[noFromEntity] && generateEntity,
-      generateToEntity: !parsedArgs[noToEntity] && generateEntity,
-      generateCopyWith: !parsedArgs[noCopy] && generateEntity,
-      classNamePrefix: parsedArgs[prefix],
-      generateImports: shouldSplitByFiles,
+
+    final settings = CodeGenerationSettings(
+      modelTypesToGenerate: {
+        if (generateEntity) ModelType.entity,
+        ModelType.dto,
+      },
+      splitByFiles: shouldSplitByFiles,
+      generateToJson: parsedArgs[noToJson] != true,
+      generateFromJson: parsedArgs[noFromJson] != true,
+      addCopyWith: parsedArgs[noCopy] != true,
+      addEquatable: true,
+      prefixName: parsedArgs[prefix],
     );
-    final generateResult = modelsGenerator.generate(json, initClassName);
+
+    final generator = Generator(
+      tokenGenerators: [
+        if (settings.generateDtos)
+          DtoTokenGenerator(
+            settings: const DtoGenerationSettings(
+              generateFromJson: true,
+              generateToJson: true,
+            ),
+            addImports: settings.splitByFiles == true,
+            generateEntityMappers: settings.generateEntities,
+          ),
+        if (settings.generateEntities)
+          EntityTokenGenerator(
+            settings: const EntityGenerationSettings(
+              addCopyWith: true,
+              addEquatable: true,
+            ),
+            addImports: settings.splitByFiles == true,
+          ),
+      ],
+    );
+    final parser = JsonDartClassParser(
+      settings: JsonParserSettings(prefixName: settings.prefixName),
+    );
+    final generateResult = generator.generateCode(parser.parse(json));
     final outputGenerator = OutputGenerator(
       generatedModelsResult: generateResult,
       splitByFiles: shouldSplitByFiles,

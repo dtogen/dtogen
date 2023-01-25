@@ -10,14 +10,14 @@ class OutputGenerator {
     required this.splitByFiles,
   });
 
-  final GeneratedModelsResult generatedModelsResult;
+  final List<GeneratedModel> generatedModelsResult;
   final String? pathToOutput;
   final bool splitByFiles;
 
   Future<void> generateOutput() async {
     final pathToOutput = this.pathToOutput;
     if (!splitByFiles) {
-      final generatedClasses = generatedModelsResult.writeClassesToString();
+      final generatedClasses = generatedModelsResult.map((e) => e.code).join("\n");
 
       if (pathToOutput != null) {
         await File(pathToOutput).writeAsString(generatedClasses);
@@ -29,28 +29,23 @@ class OutputGenerator {
 
       await _writeClassesToDirectory(
         directoryPath: join(outputPath, "dtos"),
-        classGenerators: generatedModelsResult.dtoGenerators,
+        classGenerators: generatedModelsResult.where((element) => element.type.isDto).toList(),
       );
       await _writeClassesToDirectory(
         directoryPath: join(outputPath, "entities"),
-        classGenerators: generatedModelsResult.entityGenerators,
+        classGenerators: generatedModelsResult.where((element) => element.type.isEntity).toList(),
       );
     }
   }
 
   Future<void> _writeClassesToDirectory({
     required String directoryPath,
-    required List<ClassGenerator> classGenerators,
+    required List<GeneratedModel> classGenerators,
   }) async {
     await Directory(directoryPath).create(recursive: true);
-    for (final classGenerator in classGenerators) {
-      final outputFile = File(
-        join(
-          directoryPath,
-          "${classGenerator.className.camelCaseToSnakeCase()}.dart",
-        ),
-      );
-      await outputFile.writeAsString(classGenerator.generate());
+    for (final model in classGenerators) {
+      final outputFile = File(join(directoryPath, model.fileName));
+      await outputFile.writeAsString(model.code);
     }
   }
 }

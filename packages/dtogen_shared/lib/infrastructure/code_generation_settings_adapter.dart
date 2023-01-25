@@ -1,5 +1,5 @@
 import 'package:dtogen/dtogen.dart';
-import 'package:dtogen_storage/domain/code_generation_settings.dart';
+import 'package:dtogen_shared/domain/code_generation_settings.dart';
 import 'package:hive/hive.dart';
 
 class CodeGenerationSettingsAdapter extends TypeAdapter<CodeGenerationSettings> {
