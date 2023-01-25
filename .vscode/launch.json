@@ -15,8 +15,14 @@
         "--prefix",
         "CreateShelf",
         "--no-from-json",
-        "--no-to-entity",
+        "--no-to-entity"
       ]
+    },
+    {
+      "name": "Launch App",
+      "type": "dart",
+      "request": "launch",
+      "program": "packages/dtogen_app/lib/main.dart"
     }
   ]
 }

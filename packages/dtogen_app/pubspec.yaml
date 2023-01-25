@@ -1,0 +1,26 @@
+name: dtogen_app
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.2 <3.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  dtogen:
+    path: ../dtogen
+  flutter:
+    sdk: flutter
+  flutter_hooks: ^0.18.5+1
+
+dev_dependencies:
+  dtogen_lints:
+    path: ../dtogen_lints
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

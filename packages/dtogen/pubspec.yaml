@@ -17,4 +17,6 @@ dev_dependencies:
   freezed: ^2.3.2
   build_runner: ^2.3.3
   lints: ^2.0.0
+  dtogen_lints:
+    path: ../dtogen_lints
   test: ^1.16.0
