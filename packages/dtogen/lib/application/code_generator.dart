@@ -10,18 +10,20 @@ class CodeGenerator {
       for (final token in tokens) {
         token.map(
           classDeclaration: (classDeclaration) {
-            libraryBuilder.body.add(Class((classBuilder) {
-              classBuilder
-                ..name = classDeclaration.name
-                ..extend = classDeclaration.extend?.toReference()
-                ..annotations.addAll(classDeclaration.annotations.toExpressions())
-                ..methods.addAll(classDeclaration.methods.toMethods())
-                ..fields.addAll(classDeclaration.fields.toFields())
-                ..constructors.addAll([
-                  ConstructorMapper.fromFields(classDeclaration.fields),
-                  ...classDeclaration.factories.toConstructors()
-                ]);
-            }));
+            libraryBuilder.body.add(
+              Class((classBuilder) {
+                classBuilder
+                  ..name = classDeclaration.name
+                  ..extend = classDeclaration.extend?.toReference()
+                  ..annotations.addAll(classDeclaration.annotations.toExpressions())
+                  ..methods.addAll(classDeclaration.methods.toMethods())
+                  ..fields.addAll(classDeclaration.fields.toFields())
+                  ..constructors.addAll([
+                    ConstructorMapper.fromFields(classDeclaration.fields),
+                    ...classDeclaration.factories.toConstructors()
+                  ]);
+              }),
+            );
           },
           import: (import) {
             libraryBuilder.body.add(
@@ -45,13 +47,15 @@ extension on List<AnnotationToken> {
 }
 
 extension on List<FieldToken> {
-  Iterable<Field> toFields() => map((f) => Field((fieldBuilder) {
-        fieldBuilder
-          ..name = f.name
-          ..type = refer('${f.type.name}${f.isNullable ? '?' : ''}')
-          ..modifier = FieldModifier.final$
-          ..annotations.addAll(f.annotations.toExpressions());
-      }));
+  Iterable<Field> toFields() => map(
+        (f) => Field((fieldBuilder) {
+          fieldBuilder
+            ..name = f.name
+            ..type = refer('${f.type.name}${f.isNullable ? '?' : ''}')
+            ..modifier = FieldModifier.final$
+            ..annotations.addAll(f.annotations.toExpressions());
+        }),
+      );
 
   Iterable<Parameter> toParameters() => map((field) => field.toParameter());
 }
@@ -84,16 +88,18 @@ extension on MethodTokenType {
 }
 
 extension on List<MethodToken> {
-  Iterable<Method> toMethods() => map((e) => Method((methodBuilder) {
-        methodBuilder
-          ..annotations.addAll(e.annotations.toExpressions())
-          ..returns = e.returnType.toReference()
-          ..type = e.type.toMethodType()
-          ..name = e.name
-          ..requiredParameters.addAll(e.parameters.toParameters())
-          ..lambda = e.isLambda
-          ..body = Code(e.methodText);
-      }));
+  Iterable<Method> toMethods() => map(
+        (e) => Method((methodBuilder) {
+          methodBuilder
+            ..annotations.addAll(e.annotations.toExpressions())
+            ..returns = e.returnType.toReference()
+            ..type = e.type.toMethodType()
+            ..name = e.name
+            ..requiredParameters.addAll(e.parameters.toParameters())
+            ..lambda = e.isLambda
+            ..body = Code(e.methodText);
+        }),
+      );
 }
 
 extension ConstructorMapper on List<FactoryToken> {
@@ -105,13 +111,15 @@ extension ConstructorMapper on List<FactoryToken> {
     });
   }
 
-  Iterable<Constructor> toConstructors() => map((e) => Constructor((constructorBuilder) {
-        constructorBuilder
-          ..factory = true
-          ..name = e.name
-          ..annotations.addAll(e.annotations.toExpressions())
-          ..requiredParameters.addAll(e.parameters.map((e) => e.toParameter(isRequired: false, toThis: false)))
-          ..lambda = e.isLambda
-          ..body = Code(e.methodText);
-      }));
+  Iterable<Constructor> toConstructors() => map(
+        (e) => Constructor((constructorBuilder) {
+          constructorBuilder
+            ..factory = true
+            ..name = e.name
+            ..annotations.addAll(e.annotations.toExpressions())
+            ..requiredParameters.addAll(e.parameters.map((e) => e.toParameter(isRequired: false, toThis: false)))
+            ..lambda = e.isLambda
+            ..body = Code(e.methodText);
+        }),
+      );
 }

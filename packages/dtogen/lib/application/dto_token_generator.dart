@@ -26,7 +26,7 @@ class DtoTokenGenerator extends ITokenGenerator {
     ];
     final name = '${dartClass.name}Dto';
     return [
-      if (addImports) DartToken.import(path: 'package:json_serializable/json_serializable.dart'),
+      if (addImports) const DartToken.import(path: 'package:json_serializable/json_serializable.dart'),
       DartToken.classDeclaration(
         name: name,
         annotations: [
@@ -45,7 +45,7 @@ class DtoTokenGenerator extends ITokenGenerator {
             FactoryToken(
               name: 'fromJson',
               parameters: [
-                FieldToken(name: 'json', type: ReferenceToken(name: 'Map<String, dynamic>')),
+                const FieldToken(name: 'json', type: ReferenceToken(name: 'Map<String, dynamic>')),
               ],
               isLambda: true,
               methodText: '_\$${name}FromJson(json)',
@@ -63,7 +63,7 @@ class DtoTokenGenerator extends ITokenGenerator {
         methods: [
           if (generateToJson)
             MethodToken(
-              returnType: ReferenceToken(name: 'Map<String, dynamic>'),
+              returnType: const ReferenceToken(name: 'Map<String, dynamic>'),
               name: 'toJson',
               isLambda: true,
               methodText: '_\$${name}ToJson(this)',
@@ -72,7 +72,6 @@ class DtoTokenGenerator extends ITokenGenerator {
             MethodToken(
               returnType: ReferenceToken(name: dartClass.name),
               name: 'toEntity',
-              isLambda: false,
               methodText: 'return ${dartClass.name}(${dartClass.fields.map(_toEntityFieldMapper).join(', ')},);',
             ),
         ],
@@ -106,7 +105,7 @@ class DtoTokenGenerator extends ITokenGenerator {
     return field.typeInfo.when(
       primitive: () => '${field.name}: $entityField',
       custom: (_) {
-        var customFieldMapper = '${field.typeName}Dto.fromEntity($entityField)';
+        final customFieldMapper = '${field.typeName}Dto.fromEntity($entityField)';
         if (field.isNullable) {
           return '${field.name}: $nullCheckPrefix${field.typeName}Dto.fromEntity($entityField!)';
         }

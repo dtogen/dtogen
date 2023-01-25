@@ -7,11 +7,11 @@ extension TypeStringExtensions on String {
     final isPrimitive = const {'int', 'double', 'bool', 'String'}.contains(this);
 
     if (isPrimitive) {
-      return TypeInfo.primitive();
+      return const TypeInfo.primitive();
     } else if (startsWith('List<')) {
       return TypeInfo.list(ofTypes: replaceFirst('List<', '').replaceFirst('>', '').typeInfo);
     } else if (this == 'DateTime') {
-      return TypeInfo.dateTime();
+      return const TypeInfo.dateTime();
     } else {
       return TypeInfo.custom(this);
     }

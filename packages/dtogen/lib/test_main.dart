@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dtogen/application/generator.dart';
 import 'package:dtogen/application/json_dart_class_parser.dart';
 import 'package:dtogen/dtogen.dart';
@@ -24,29 +26,31 @@ void main() {
     ],
   };
 
-  final addImports = false;
-  final generator = Generator(tokenGenerators: [
-    DtoTokenGenerator(
-      settings: DtoGenerationSettings(
-        generateFromJson: true,
-        generateToJson: true,
+  const addImports = false;
+  final generator = Generator(
+    tokenGenerators: [
+      DtoTokenGenerator(
+        settings: const DtoGenerationSettings(
+          generateFromJson: true,
+          generateToJson: true,
+        ),
+        addImports: addImports,
+        generateEntityMappers: true,
       ),
-      addImports: addImports,
-      generateEntityMappers: true,
-    ),
-    EntityTokenGenerator(
-      settings: EntityGenerationSettings(
-        addCopyWith: true,
-        addEquatable: true,
+      EntityTokenGenerator(
+        settings: const EntityGenerationSettings(
+          addCopyWith: true,
+          addEquatable: true,
+        ),
+        addImports: addImports,
       ),
-      addImports: addImports,
-    ),
-  ]);
+    ],
+  );
   final parser = JsonDartClassParser(
     settings: JsonParserSettings(prefixName: 'User'),
   );
 
-  print(
+  log(
     generator //
         .generateCode(parser.parse(userJson))
         .join('\n'),

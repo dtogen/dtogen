@@ -11,7 +11,7 @@ class Generator {
 
   List<GeneratedModel> generateCode(Set<DartClass> classes) {
     final generatedClasses = <GeneratedModel>[];
-    final codeGenerator = CodeGenerator();
+    const codeGenerator = CodeGenerator();
 
     for (final cl in classes) {
       for (final generator in tokenGenerators) {

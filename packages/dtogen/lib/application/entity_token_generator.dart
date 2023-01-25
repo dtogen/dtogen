@@ -1,6 +1,6 @@
 import 'package:dtogen/application/i_token_generator.dart';
-import 'package:dtogen/models/dart_token.dart';
 import 'package:dtogen/models/dart_class.dart';
+import 'package:dtogen/models/dart_token.dart';
 import 'package:dtogen/models/entity_generation_settings.dart';
 import 'package:dtogen/models/generated_model.dart';
 
@@ -17,14 +17,14 @@ class EntityTokenGenerator extends ITokenGenerator {
     final addEquatable = settings.addEquatable;
     final addCopyWith = settings.addCopyWith;
     return [
-      if (addImports && addCopyWith) DartToken.import(path: 'package:copy_with/copy_with.dart'),
-      if (addImports && addEquatable) DartToken.import(path: 'package:equatable/equatable.dart'),
+      if (addImports && addCopyWith) const DartToken.import(path: 'package:copy_with/copy_with.dart'),
+      if (addImports && addEquatable) const DartToken.import(path: 'package:equatable/equatable.dart'),
       DartToken.classDeclaration(
         name: dartClass.name,
         annotations: [
-          if (addCopyWith) AnnotationToken(name: 'CopyWith()'),
+          if (addCopyWith) const AnnotationToken(name: 'CopyWith()'),
         ],
-        extend: addEquatable ? ReferenceToken(name: 'Equatable') : null,
+        extend: addEquatable ? const ReferenceToken(name: 'Equatable') : null,
         fields: [
           for (final field in dartClass.fields)
             FieldToken(
@@ -36,9 +36,9 @@ class EntityTokenGenerator extends ITokenGenerator {
         methods: [
           if (addEquatable)
             MethodToken(
-              annotations: [AnnotationToken(name: 'override')],
+              annotations: [const AnnotationToken(name: 'override')],
               type: MethodTokenType.getter,
-              returnType: ReferenceToken(name: 'List<Object?>'),
+              returnType: const ReferenceToken(name: 'List<Object?>'),
               name: 'props',
               isLambda: true,
               methodText: '[${dartClass.fields.map((e) => e.name).join(', ')},]',

@@ -51,14 +51,16 @@ class JsonDartClassParser extends IDartClassParser<Json> {
   /// ```
   String _addPrefixWithoutDuplications(String className) {
     final prefix = _prefix;
-    if (prefix.isEmpty) return className;
+    if (prefix.isEmpty) {
+      return className;
+    }
 
     final prefixParts = prefix.splitByUpperCase();
     if (prefixParts.length == 1) {
       if (className.startsWith(prefix)) {
         return className;
       } else {
-        "$prefix$className";
+        return "$prefix$className";
       }
     }
 
