@@ -1,5 +1,6 @@
+import 'package:dtogen/application/code_generator.dart';
 import 'package:dtogen/application/core/type_string_extensions.dart';
-import 'package:dtogen/dtogen.dart';
+import 'package:dtogen/application/i_token_generator.dart';
 import 'package:dtogen/models/dart_class.dart';
 import 'package:dtogen/models/generated_model.dart';
 

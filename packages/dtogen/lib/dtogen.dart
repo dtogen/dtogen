@@ -7,4 +7,4 @@ export 'application/code_generator.dart';
 export 'application/dto_token_generator.dart';
 export 'application/entity_token_generator.dart';
 export 'application/i_token_generator.dart';
-
+export 'models/generated_model.dart';
