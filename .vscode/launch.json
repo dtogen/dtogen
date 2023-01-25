@@ -1,24 +1,6 @@
 {
   "configurations": [
     {
-      "name": "Launch example",
-      "type": "dart",
-      "request": "launch",
-      "program": "packages/dtogen_cli/bin/main.dart",
-      "args": [
-        "--input",
-        "example/shelf_scheme.json",
-        "--init-class",
-        "Shelf",
-        "--output",
-        "example/generated_shelf.dart",
-        "--prefix",
-        "CreateShelf",
-        "--no-from-json",
-        "--no-to-entity"
-      ]
-    },
-    {
       "name": "Launch App",
       "type": "dart",
       "request": "launch",
