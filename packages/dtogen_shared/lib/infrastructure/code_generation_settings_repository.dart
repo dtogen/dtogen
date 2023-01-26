@@ -7,7 +7,7 @@ import 'package:dtogen_shared/infrastructure/code_generation_settings_adapter.da
 import 'package:hive/hive.dart';
 
 class CodeGenerationSettingsRepository extends ICodeGenerationSettingsRepository {
-  final _box = Hive.openBox<CodeGenerationSettings>(_key);
+  late final _box = Hive.openBox<CodeGenerationSettings?>(_key);
   static const _key = 'settings';
 
   @override

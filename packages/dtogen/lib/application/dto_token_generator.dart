@@ -25,19 +25,27 @@ class DtoTokenGenerator extends ITokenGenerator {
       if (!generateToJson) 'createToJson: false',
     ];
     final name = '${dartClass.name}Dto';
+    final fields = dartClass.fields;
     return [
-      if (addImports) const DartToken.import(path: 'package:json_serializable/json_serializable.dart'),
+      if (addImports) ...[
+        const DartToken.import(path: 'package:json_serializable/json_serializable.dart'),
+        if (settings.generateHiveAnnotations) const DartToken.import(path: 'package:hive/hive.dart'),
+      ],
       DartToken.classDeclaration(
         name: name,
         annotations: [
+          if (settings.generateHiveAnnotations) const AnnotationToken(name: 'HiveType(typeId: -1)'),
           AnnotationToken(name: 'JsonSerializable(${jsonSerializableArgs.join(', ')})'),
         ],
         fields: [
-          for (final field in dartClass.fields)
+          for (var i = 0; i < fields.length; i++)
             FieldToken(
-              name: field.name,
-              type: ReferenceToken(name: field.typeName),
-              isNullable: field.isNullable,
+              name: fields[i].name,
+              type: ReferenceToken(name: fields[i].typeName),
+              annotations: [
+                if (settings.generateHiveAnnotations) AnnotationToken(name: 'HiveField($i)'),
+              ],
+              isNullable: fields[i].isNullable,
             ),
         ],
         factories: [

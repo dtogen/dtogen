@@ -16,21 +16,29 @@ class EntityTokenGenerator extends ITokenGenerator {
   List<DartToken> generateTokens(DartClass dartClass) {
     final addEquatable = settings.addEquatable;
     final addCopyWith = settings.addCopyWith;
+    final fields = dartClass.fields;
     return [
-      if (addImports && addCopyWith) const DartToken.import(path: 'package:copy_with/copy_with.dart'),
-      if (addImports && addEquatable) const DartToken.import(path: 'package:equatable/equatable.dart'),
+      if (addImports) ...[
+        if (addCopyWith) const DartToken.import(path: 'package:copy_with/copy_with.dart'),
+        if (addEquatable) const DartToken.import(path: 'package:equatable/equatable.dart'),
+        if (settings.addHiveAnnotations) const DartToken.import(path: 'package:hive/hive.dart'),
+      ],
       DartToken.classDeclaration(
         name: dartClass.name,
         annotations: [
+          if (settings.addHiveAnnotations) const AnnotationToken(name: 'HiveType(typeId: -1)'),
           if (addCopyWith) const AnnotationToken(name: 'CopyWith()'),
         ],
         extend: addEquatable ? const ReferenceToken(name: 'Equatable') : null,
         fields: [
-          for (final field in dartClass.fields)
+          for (var i = 0; i < fields.length; i++)
             FieldToken(
-              name: field.name,
-              type: ReferenceToken(name: field.typeName),
-              isNullable: field.isNullable,
+              name: fields[i].name,
+              type: ReferenceToken(name: fields[i].typeName),
+              isNullable: fields[i].isNullable,
+              annotations: [
+                if (settings.addHiveAnnotations) AnnotationToken(name: 'HiveField($i)'),
+              ],
             ),
         ],
         methods: [

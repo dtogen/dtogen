@@ -9,13 +9,15 @@ class CodeGenerationSettingsAdapter extends TypeAdapter<CodeGenerationSettings> 
   @override
   CodeGenerationSettings read(BinaryReader reader) {
     return CodeGenerationSettings(
-      modelTypesToGenerate: reader.readList().cast<ModelType>().toSet(),
+      modelTypesToGenerate: (reader.read() as List).cast<ModelType>().toSet(),
       splitByFiles: reader.read(),
       generateToJson: reader.read(),
       generateFromJson: reader.read(),
       addCopyWith: reader.read(),
       addEquatable: reader.read(),
       prefixName: reader.read(),
+      addDtoHiveAnnotation: reader.read(),
+      addEntityHiveAnnotation: reader.read(),
     );
   }
 
@@ -28,7 +30,9 @@ class CodeGenerationSettingsAdapter extends TypeAdapter<CodeGenerationSettings> 
       ..write(obj.generateFromJson)
       ..write(obj.addCopyWith)
       ..write(obj.addEquatable)
-      ..write(obj.prefixName);
+      ..write(obj.prefixName)
+      ..write(obj.addDtoHiveAnnotation)
+      ..write(obj.addEntityHiveAnnotation);
   }
 }
 

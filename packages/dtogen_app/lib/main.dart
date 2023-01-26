@@ -60,31 +60,13 @@ class MyHomePage extends HookWidget {
         addCopyWith: generateCopyWith.value,
         addEquatable: true,
         prefixName: classNamePrefixController.text.isEmpty ? null : classNamePrefixController.text,
+        addDtoHiveAnnotation: false,
+        addEntityHiveAnnotation: false,
       );
 
-      final generator = Generator(
-        tokenGenerators: [
-          if (settings.generateDtos)
-            DtoTokenGenerator(
-              settings: const DtoGenerationSettings(
-                generateFromJson: true,
-                generateToJson: true,
-              ),
-              addImports: settings.splitByFiles == true,
-              generateEntityMappers: settings.generateEntities,
-            ),
-          if (settings.generateEntities)
-            EntityTokenGenerator(
-              settings: const EntityGenerationSettings(
-                addCopyWith: true,
-                addEquatable: true,
-              ),
-              addImports: settings.splitByFiles == true,
-            ),
-        ],
-      );
+      final generator = settings.createGeneratorFromSettings();
       final parser = JsonDartClassParser(
-        settings: JsonParserSettings(prefixName: settings.prefixName),
+        settings: settings.toJsonParserSettings(),
       );
 
       try {
