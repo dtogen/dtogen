@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dtogen/dtogen.dart';
+import 'package:dtogen_shared/dtogen_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -48,21 +49,30 @@ class MyHomePage extends HookWidget {
     final generateImports = useState<bool>(true);
 
     void generateDto() {
-      final generator = ModelGenerator(
-        generateFromJson: generateFromJson.value,
+      final settings = CodeGenerationSettings(
+        modelTypesToGenerate: {
+          if (generateEntity.value) ModelType.entity,
+          ModelType.dto,
+        },
+        splitByFiles: false,
         generateToJson: generateToJson.value,
-        generateFromEntity: generateFromEntity.value,
-        generateToEntity: generateToEntity.value,
-        generateEntity: generateEntity.value,
-        generateCopyWith: generateCopyWith.value,
-        generateImports: generateImports.value,
-        classNamePrefix: classNamePrefixController.text,
+        generateFromJson: generateFromJson.value,
+        addCopyWith: generateCopyWith.value,
+        addEquatable: true,
+        prefixName: classNamePrefixController.text.isEmpty ? null : classNamePrefixController.text,
+        addDtoHiveAnnotation: false,
+        addEntityHiveAnnotation: false,
+      );
+
+      final generator = settings.createGeneratorFromSettings();
+      final parser = JsonDartClassParser(
+        settings: settings.toJsonParserSettings(),
       );
 
       try {
         final json = jsonDecode(inputController.text);
-        final result = generator.generate(json);
-        final stringClasses = result.writeClassesToString();
+        final generateResult = generator.generateCode(parser.parse(json));
+        final stringClasses = generateResult.map((e) => e.code).join('\n');
 
         outputController.text = stringClasses;
       } catch (error) {
