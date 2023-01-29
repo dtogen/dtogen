@@ -33,19 +33,22 @@ class GeneratorView extends HookWidget {
                     maxLines: null,
                   ),
                 ),
-                SizedBox(
-                  width: 400,
-                  child: FlexList(
-                    children: [
-                      FilledButton(
-                        onPressed: () {},
-                        child: const Text('GENERATE'),
-                      ),
-                      FilledButton(
-                        onPressed: () {},
-                        child: const Text('GENERATE AND COPY'),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox(
+                    width: 400,
+                    child: FlexList(
+                      children: [
+                        FilledButton(
+                          onPressed: () {},
+                          child: const Text('GENERATE'),
+                        ),
+                        FilledButton(
+                          onPressed: () {},
+                          child: const Text('GENERATE AND COPY'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SettingsView(),
