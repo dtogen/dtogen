@@ -35,6 +35,14 @@ class GeneratorSettingsCubit extends HydratedCubit<GeneratorSettings> {
     emit(state.copyWith.prefix(value));
   }
 
+  void setAddHiveToDto(bool value) {
+    emit(state.copyWith.addHiveToDto(value));
+  }
+
+  void setAddHiveToEntity(bool value) {
+    emit(state.copyWith.addHiveToEntity(value));
+  }
+
   @override
   GeneratorSettings? fromJson(Map<String, dynamic> json) {
     return GeneratorSettingsDto.fromJson(json).toEntity();

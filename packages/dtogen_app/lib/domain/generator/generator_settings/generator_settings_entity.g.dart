@@ -11,11 +11,15 @@ abstract class _$GeneratorSettingsCWProxy {
 
   GeneratorSettings generateToJson(bool generateToJson);
 
+  GeneratorSettings addHiveToDto(bool addHiveToDto);
+
   GeneratorSettings generateEntity(bool generateEntity);
 
   GeneratorSettings generateEquatable(bool generateEquatable);
 
   GeneratorSettings generateCopyWith(bool generateCopyWith);
+
+  GeneratorSettings addHiveToEntity(bool addHiveToEntity);
 
   GeneratorSettings generateImports(bool generateImports);
 
@@ -30,9 +34,11 @@ abstract class _$GeneratorSettingsCWProxy {
   GeneratorSettings call({
     bool? generateFromJson,
     bool? generateToJson,
+    bool? addHiveToDto,
     bool? generateEntity,
     bool? generateEquatable,
     bool? generateCopyWith,
+    bool? addHiveToEntity,
     bool? generateImports,
     String? prefix,
   });
@@ -53,6 +59,10 @@ class _$GeneratorSettingsCWProxyImpl implements _$GeneratorSettingsCWProxy {
       this(generateToJson: generateToJson);
 
   @override
+  GeneratorSettings addHiveToDto(bool addHiveToDto) =>
+      this(addHiveToDto: addHiveToDto);
+
+  @override
   GeneratorSettings generateEntity(bool generateEntity) =>
       this(generateEntity: generateEntity);
 
@@ -63,6 +73,10 @@ class _$GeneratorSettingsCWProxyImpl implements _$GeneratorSettingsCWProxy {
   @override
   GeneratorSettings generateCopyWith(bool generateCopyWith) =>
       this(generateCopyWith: generateCopyWith);
+
+  @override
+  GeneratorSettings addHiveToEntity(bool addHiveToEntity) =>
+      this(addHiveToEntity: addHiveToEntity);
 
   @override
   GeneratorSettings generateImports(bool generateImports) =>
@@ -82,9 +96,11 @@ class _$GeneratorSettingsCWProxyImpl implements _$GeneratorSettingsCWProxy {
   GeneratorSettings call({
     Object? generateFromJson = const $CopyWithPlaceholder(),
     Object? generateToJson = const $CopyWithPlaceholder(),
+    Object? addHiveToDto = const $CopyWithPlaceholder(),
     Object? generateEntity = const $CopyWithPlaceholder(),
     Object? generateEquatable = const $CopyWithPlaceholder(),
     Object? generateCopyWith = const $CopyWithPlaceholder(),
+    Object? addHiveToEntity = const $CopyWithPlaceholder(),
     Object? generateImports = const $CopyWithPlaceholder(),
     Object? prefix = const $CopyWithPlaceholder(),
   }) {
@@ -101,6 +117,12 @@ class _$GeneratorSettingsCWProxyImpl implements _$GeneratorSettingsCWProxy {
           ? _value.generateToJson!
           // ignore: cast_nullable_to_non_nullable
           : generateToJson as bool,
+      addHiveToDto:
+          addHiveToDto == const $CopyWithPlaceholder() || addHiveToDto == null
+              // ignore: unnecessary_non_null_assertion
+              ? _value.addHiveToDto!
+              // ignore: cast_nullable_to_non_nullable
+              : addHiveToDto as bool,
       generateEntity: generateEntity == const $CopyWithPlaceholder() ||
               generateEntity == null
           // ignore: unnecessary_non_null_assertion
@@ -119,6 +141,12 @@ class _$GeneratorSettingsCWProxyImpl implements _$GeneratorSettingsCWProxy {
           ? _value.generateCopyWith!
           // ignore: cast_nullable_to_non_nullable
           : generateCopyWith as bool,
+      addHiveToEntity: addHiveToEntity == const $CopyWithPlaceholder() ||
+              addHiveToEntity == null
+          // ignore: unnecessary_non_null_assertion
+          ? _value.addHiveToEntity!
+          // ignore: cast_nullable_to_non_nullable
+          : addHiveToEntity as bool,
       generateImports: generateImports == const $CopyWithPlaceholder() ||
               generateImports == null
           // ignore: unnecessary_non_null_assertion

@@ -8,9 +8,11 @@ class GeneratorSettingsDto {
   const GeneratorSettingsDto({
     required this.generateFromJson,
     required this.generateToJson,
+    required this.addHiveToDto,
     required this.generateEntity,
     required this.generateEquatable,
     required this.generateCopyWith,
+    required this.addHiveToEntity,
     required this.generateImports,
     required this.prefix,
   });
@@ -22,9 +24,11 @@ class GeneratorSettingsDto {
     return GeneratorSettingsDto(
       generateFromJson: entity.generateFromJson,
       generateToJson: entity.generateToJson,
+      addHiveToDto: entity.addHiveToDto,
       generateEntity: entity.generateEntity,
       generateEquatable: entity.generateEquatable,
       generateCopyWith: entity.generateCopyWith,
+      addHiveToEntity: entity.addHiveToEntity,
       generateImports: entity.generateImports,
       prefix: entity.prefix,
     );
@@ -32,9 +36,11 @@ class GeneratorSettingsDto {
 
   final bool generateFromJson;
   final bool generateToJson;
+  final bool addHiveToDto;
   final bool generateEntity;
   final bool generateEquatable;
   final bool generateCopyWith;
+  final bool addHiveToEntity;
   final bool generateImports;
   final String? prefix;
 
@@ -43,8 +49,10 @@ class GeneratorSettingsDto {
       generateFromJson: generateFromJson,
       generateToJson: generateToJson,
       generateEntity: generateEntity,
+      addHiveToDto: addHiveToDto,
       generateEquatable: generateEquatable,
       generateCopyWith: generateCopyWith,
+      addHiveToEntity: addHiveToEntity,
       generateImports: generateImports,
       prefix: prefix,
     );
