@@ -72,4 +72,13 @@ class GeneratorSettings extends Equatable {
         generateImports,
         prefix,
       ];
+
+  @override
+  String toString() {
+    return 'GeneratorSettings(generateFromJson: $generateFromJson, '
+        'generateToJson: $generateToJson, addHiveToDto: $addHiveToDto, '
+        'generateEntity: $generateEntity, generateEquatable: $generateEquatable, '
+        'generateCopyWith: $generateCopyWith, addHiveToEntity: $addHiveToEntity, '
+        'generateImports: $generateImports, prefix: $prefix)';
+  }
 }
