@@ -18,13 +18,15 @@ class MyApp extends StatelessWidget {
           title: 'DTO Gen',
           themeMode: state.themeMode,
           color: state.accentColor,
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
+          theme: ThemeData(
+            brightness: Brightness.light,
             accentColor: state.accentColor,
             visualDensity: VisualDensity.standard,
             focusTheme: FocusThemeData(glowFactor: glowFactor),
+            scaffoldBackgroundColor: const Color(0xFFE0E0E0),
           ),
-          theme: ThemeData(
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
             accentColor: state.accentColor,
             visualDensity: VisualDensity.standard,
             focusTheme: FocusThemeData(glowFactor: glowFactor),

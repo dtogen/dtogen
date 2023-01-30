@@ -6,6 +6,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GeneratorView();
+    return const ScaffoldPage(
+      header: PageHeader(
+        title: Text('DTO Gen'),
+      ),
+      content: GeneratorView(),
+    );
   }
 }

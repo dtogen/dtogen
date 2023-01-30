@@ -51,7 +51,11 @@ class GeneratorView extends HookWidget {
                     ),
                   ),
                 ),
-                const SettingsView(),
+                const SizedBox(height: 8),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: SettingsView(),
+                ),
               ],
             ),
           ),
