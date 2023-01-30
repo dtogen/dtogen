@@ -1,4 +1,6 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:dtogen/dtogen.dart';
+import 'package:dtogen_shared/domain/code_generation_settings.dart';
 import 'package:equatable/equatable.dart';
 
 part 'generator_settings_entity.g.dart';
@@ -41,6 +43,22 @@ class GeneratorSettings extends Equatable {
 
   final bool generateImports;
   final String? prefix;
+
+  CodeGenerationSettings toCodeGenerationSettings() {
+    return CodeGenerationSettings(
+      generateFromJson: generateFromJson,
+      generateToJson: generateToJson,
+      addCopyWith: generateCopyWith,
+      addEquatable: generateEquatable,
+      addDtoHiveAnnotation: addHiveToDto,
+      addEntityHiveAnnotation: addHiveToEntity,
+      modelTypesToGenerate: {
+        if (generateFromJson || generateToJson) ModelType.dto,
+        if (generateEntity) ModelType.entity,
+      },
+      prefixName: prefix,
+    );
+  }
 
   @override
   List<Object?> get props => [
