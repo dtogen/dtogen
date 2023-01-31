@@ -3,9 +3,15 @@ name: Deploy App To GitHub Pages
 on:
   push:
     branches: [master]
+    paths:
+      - ".github/**"
+      - "packages/dtogen_app/**"
 
 env:
   FLUTTER_VERSION: "3.7.0"
+
+permissions:
+  contents: write
 
 jobs:
   build:
