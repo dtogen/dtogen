@@ -4,12 +4,16 @@ part 'type_string_extensions.freezed.dart';
 
 extension TypeStringExtensions on String {
   TypeInfo get typeInfo {
-    final isPrimitive = const {'int', 'double', 'bool', 'String'}.contains(this);
+    const primitiveTypes = {'int', 'double', 'bool', 'String'};
+
+    final isPrimitive = primitiveTypes.contains(this);
 
     if (isPrimitive) {
       return const TypeInfo.primitive();
     } else if (startsWith('List<')) {
-      return TypeInfo.list(ofTypes: replaceFirst('List<', '').replaceFirst('>', '').typeInfo);
+      return TypeInfo.list(
+        ofTypes: replaceFirst('List<', '').replaceFirst('>', '').typeInfo,
+      );
     } else if (this == 'DateTime') {
       return const TypeInfo.dateTime();
     } else {
@@ -35,6 +39,14 @@ extension TypeStringExtensions on String {
 
   String dtoNameToEntity() {
     return replaceAll("Dto", "");
+  }
+
+  String toCamelCase() {
+    return replaceAll(RegExp(r"(_|-)+"), " ")
+        .split(" ")
+        .map((str) => str.firstCharToUpperCase())
+        .join()
+        .firstCharToLowerCase();
   }
 
   String camelCaseToSnakeCase() {

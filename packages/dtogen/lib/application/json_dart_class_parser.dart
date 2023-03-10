@@ -92,6 +92,21 @@ class JsonDartClassParser extends IDartClassParser<Json> {
     final isNullable = key.contains('?');
     key = key.replaceAll('?', '');
 
+    final fieldType = _parseFieldType(key, value, generatedClasses);
+    final fieldName = key.toCamelCase();
+
+    return DartClassField(
+      name: fieldName,
+      typeName: fieldType,
+      isNullable: isNullable,
+    );
+  }
+
+  String _parseFieldType(
+    String key,
+    Object value,
+    Set<DartClass> generatedClasses,
+  ) {
     final date = DateTime.tryParse(value.toString());
 
     final String fieldType;
@@ -120,11 +135,8 @@ class JsonDartClassParser extends IDartClassParser<Json> {
         "Key: $key, value: $value",
       );
     }
-    return DartClassField(
-      name: key,
-      typeName: fieldType,
-      isNullable: isNullable,
-    );
+
+    return fieldType;
   }
 
   String _classNameFromKey(String key) {
