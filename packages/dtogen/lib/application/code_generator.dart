@@ -38,7 +38,7 @@ class CodeGenerator {
         );
       }
     });
-    final generatedCode = library.accept(CustomClassEmitter()).toString();
+    final generatedCode = library.accept(_CustomClassEmitter()).toString();
 
     return DartFormatter().format(generatedCode);
   }
@@ -133,8 +133,8 @@ extension ConstructorMapper on List<FactoryToken> {
 /// Overrides [DartEmitter.visitClass] so that it:
 /// 1. Doesn't add empty lines between class fields.
 /// 2. Adds empty lines between class methods.
-class CustomClassEmitter extends DartEmitter {
-  CustomClassEmitter() : super(useNullSafetySyntax: true);
+class _CustomClassEmitter extends DartEmitter {
+  _CustomClassEmitter() : super(useNullSafetySyntax: true);
 
   @override
   StringSink visitClass(Class spec, [StringSink? output]) {
