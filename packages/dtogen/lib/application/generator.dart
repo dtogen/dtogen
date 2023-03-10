@@ -16,8 +16,10 @@ class Generator {
     for (final cl in classes) {
       for (final generator in tokenGenerators) {
         final generatedClassTokens = generator.generateTokens(cl);
+        final filename = '${cl.name.camelCaseToSnakeCase()}.dart';
+
         final generatedModel = GeneratedModel(
-          fileName: '${cl.name.camelCaseToSnakeCase()}.dart',
+          fileName: filename,
           type: generator.modelGeneratorType,
           code: codeGenerator.generate(generatedClassTokens),
         );
