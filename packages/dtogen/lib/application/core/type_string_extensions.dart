@@ -4,14 +4,16 @@ part 'type_string_extensions.freezed.dart';
 
 extension TypeStringExtensions on String {
   TypeInfo get typeInfo {
-    final isPrimitive = const {'int', 'double', 'bool', 'String'}.contains(this);
+    const primitiveTypes = {'int', 'double', 'bool', 'String', 'DateTime'};
+
+    final isPrimitive = primitiveTypes.contains(this);
 
     if (isPrimitive) {
       return const TypeInfo.primitive();
     } else if (startsWith('List<')) {
-      return TypeInfo.list(ofTypes: replaceFirst('List<', '').replaceFirst('>', '').typeInfo);
-    } else if (this == 'DateTime') {
-      return const TypeInfo.dateTime();
+      return TypeInfo.list(
+        ofTypes: replaceFirst('List<', '').replaceFirst('>', '').typeInfo,
+      );
     } else {
       return TypeInfo.custom(this);
     }
@@ -37,6 +39,14 @@ extension TypeStringExtensions on String {
     return replaceAll("Dto", "");
   }
 
+  String toCamelCase() {
+    return replaceAll(RegExp(r"(_|-)+"), " ")
+        .split(" ")
+        .map((str) => str.firstCharToUpperCase())
+        .join()
+        .firstCharToLowerCase();
+  }
+
   String camelCaseToSnakeCase() {
     return splitByUpperCase().map((e) => e.toLowerCase()).join("_");
   }
@@ -50,6 +60,5 @@ extension TypeStringExtensions on String {
 class TypeInfo with _$TypeInfo {
   const factory TypeInfo.primitive() = _Primitive;
   const factory TypeInfo.list({required TypeInfo ofTypes}) = _List;
-  const factory TypeInfo.dateTime() = _DateTime;
   const factory TypeInfo.custom(String typeName) = _Custom;
 }

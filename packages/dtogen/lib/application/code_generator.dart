@@ -15,7 +15,8 @@ class CodeGenerator {
                 classBuilder
                   ..name = classDeclaration.name
                   ..extend = classDeclaration.extend?.toReference()
-                  ..annotations.addAll(classDeclaration.annotations.toExpressions())
+                  ..annotations
+                      .addAll(classDeclaration.annotations.toExpressions())
                   ..methods.addAll(classDeclaration.methods.toMethods())
                   ..fields.addAll(classDeclaration.fields.toFields())
                   ..constructors.addAll([
@@ -37,7 +38,8 @@ class CodeGenerator {
         );
       }
     });
-    final generatedCode = library.accept(DartEmitter(useNullSafetySyntax: true)).toString();
+    final generatedCode = library.accept(_CustomClassEmitter()).toString();
+
     return DartFormatter().format(generatedCode);
   }
 }
@@ -117,9 +119,84 @@ extension ConstructorMapper on List<FactoryToken> {
             ..factory = true
             ..name = e.name
             ..annotations.addAll(e.annotations.toExpressions())
-            ..requiredParameters.addAll(e.parameters.map((e) => e.toParameter(isRequired: false, toThis: false)))
+            ..requiredParameters.addAll(
+              e.parameters.map(
+                (e) => e.toParameter(isRequired: false, toThis: false),
+              ),
+            )
             ..lambda = e.isLambda
             ..body = Code(e.methodText);
         }),
       );
+}
+
+/// Overrides [DartEmitter.visitClass] so that it:
+/// 1. Doesn't add empty lines between class fields.
+/// 2. Adds empty lines between class methods.
+class _CustomClassEmitter extends DartEmitter {
+  _CustomClassEmitter() : super(useNullSafetySyntax: true);
+
+  @override
+  StringSink visitClass(Class spec, [StringSink? output]) {
+    final out = output ??= StringBuffer();
+    spec.docs.forEach(out.writeln);
+    for (final a in spec.annotations) {
+      visitAnnotation(a, out);
+    }
+    if (spec.abstract) {
+      out.write('abstract ');
+    }
+    out.write('class ${spec.name}');
+    visitTypeParameters(spec.types.map((r) => r.type), out);
+    if (spec.extend != null) {
+      out.write(' extends ');
+      spec.extend!.type.accept(this, out);
+    }
+    if (spec.mixins.isNotEmpty) {
+      out
+        ..write(' with ')
+        ..writeAll(
+          spec.mixins.map<StringSink>((m) => m.type.accept(this)),
+          ',',
+        );
+    }
+    if (spec.implements.isNotEmpty) {
+      out
+        ..write(' implements ')
+        ..writeAll(
+          spec.implements.map<StringSink>((m) => m.type.accept(this)),
+          ',',
+        );
+    }
+    out.write(' {');
+    for (final c in spec.constructors) {
+      visitConstructor(c, spec.name, out);
+      out.writeln();
+    }
+    for (final f in spec.fields) {
+      if (f.annotations.isNotEmpty) {
+        out.writeln();
+      }
+      visitField(f, out);
+    }
+    out.writeln();
+
+    for (final m in spec.methods) {
+      visitMethod(m, out);
+      if (_isLambdaMethod(m)) {
+        out
+          ..writeln(';')
+          ..writeln();
+      }
+    }
+    out.writeln(' }');
+    return out;
+  }
+
+  static bool _isLambdaBody(Code? code) =>
+      code is ToCodeExpression && !code.isStatement;
+
+  /// Whether the provided [method] is considered a lambda method.
+  static bool _isLambdaMethod(Method method) =>
+      method.lambda ?? _isLambdaBody(method.body);
 }

@@ -74,7 +74,10 @@ class JsonDartClassParser extends IDartClassParser<Json> {
     return "$prefix$className";
   }
 
-  List<DartClassField> _parseClassFields(Json json, Set<DartClass> generatedClasses) {
+  List<DartClassField> _parseClassFields(
+    Json json,
+    Set<DartClass> generatedClasses,
+  ) {
     return json //
         .entries
         .map((entry) => _parseField(entry.key, entry.value, generatedClasses))
@@ -89,8 +92,27 @@ class JsonDartClassParser extends IDartClassParser<Json> {
     final isNullable = key.contains('?');
     key = key.replaceAll('?', '');
 
+    final fieldType = _parseFieldType(key, value, generatedClasses);
+    final fieldName = key.toCamelCase();
+
+    return DartClassField(
+      name: fieldName,
+      typeName: fieldType,
+      isNullable: isNullable,
+    );
+  }
+
+  String _parseFieldType(
+    String key,
+    Object value,
+    Set<DartClass> generatedClasses,
+  ) {
+    final date = DateTime.tryParse(value.toString());
+
     final String fieldType;
-    if (value is String) {
+    if (date != null) {
+      fieldType = "DateTime";
+    } else if (value is String) {
       fieldType = "String";
     } else if (value is int) {
       fieldType = "int";
@@ -113,15 +135,15 @@ class JsonDartClassParser extends IDartClassParser<Json> {
         "Key: $key, value: $value",
       );
     }
-    return DartClassField(
-      name: key,
-      typeName: fieldType,
-      isNullable: isNullable,
-    );
+
+    return fieldType;
   }
 
   String _classNameFromKey(String key) {
-    var fieldTypeName = key.split("_").map((e) => e.firstCharToUpperCase()).join();
+    var fieldTypeName = key //
+        .split("_")
+        .map((e) => e.firstCharToUpperCase())
+        .join();
     if (fieldTypeName.endsWith("s")) {
       fieldTypeName = fieldTypeName.substring(0, fieldTypeName.length - 1);
     }
