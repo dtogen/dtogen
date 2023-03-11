@@ -174,6 +174,9 @@ class _CustomClassEmitter extends DartEmitter {
       out.writeln();
     }
     for (final f in spec.fields) {
+      if (f.annotations.isNotEmpty) {
+        out.writeln();
+      }
       visitField(f, out);
     }
     out.writeln();
