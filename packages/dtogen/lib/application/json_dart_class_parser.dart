@@ -140,8 +140,10 @@ class JsonDartClassParser extends IDartClassParser<Json> {
   }
 
   String _classNameFromKey(String key) {
-    var fieldTypeName =
-        key.split("_").map((e) => e.firstCharToUpperCase()).join();
+    var fieldTypeName = key //
+        .split("_")
+        .map((e) => e.firstCharToUpperCase())
+        .join();
     if (fieldTypeName.endsWith("s")) {
       fieldTypeName = fieldTypeName.substring(0, fieldTypeName.length - 1);
     }

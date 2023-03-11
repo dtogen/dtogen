@@ -20,7 +20,6 @@ mixin _$TypeInfo {
   TResult when<TResult extends Object?>({
     required TResult Function() primitive,
     required TResult Function(TypeInfo ofTypes) list,
-    required TResult Function() dateTime,
     required TResult Function(String typeName) custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +27,6 @@ mixin _$TypeInfo {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? primitive,
     TResult? Function(TypeInfo ofTypes)? list,
-    TResult? Function()? dateTime,
     TResult? Function(String typeName)? custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +34,6 @@ mixin _$TypeInfo {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primitive,
     TResult Function(TypeInfo ofTypes)? list,
-    TResult Function()? dateTime,
     TResult Function(String typeName)? custom,
     required TResult orElse(),
   }) =>
@@ -45,7 +42,6 @@ mixin _$TypeInfo {
   TResult map<TResult extends Object?>({
     required TResult Function(_Primitive value) primitive,
     required TResult Function(_List value) list,
-    required TResult Function(_DateTime value) dateTime,
     required TResult Function(_Custom value) custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -53,7 +49,6 @@ mixin _$TypeInfo {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Primitive value)? primitive,
     TResult? Function(_List value)? list,
-    TResult? Function(_DateTime value)? dateTime,
     TResult? Function(_Custom value)? custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +56,6 @@ mixin _$TypeInfo {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Primitive value)? primitive,
     TResult Function(_List value)? list,
-    TResult Function(_DateTime value)? dateTime,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) =>
@@ -125,7 +119,6 @@ class _$_Primitive implements _Primitive {
   TResult when<TResult extends Object?>({
     required TResult Function() primitive,
     required TResult Function(TypeInfo ofTypes) list,
-    required TResult Function() dateTime,
     required TResult Function(String typeName) custom,
   }) {
     return primitive();
@@ -136,7 +129,6 @@ class _$_Primitive implements _Primitive {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? primitive,
     TResult? Function(TypeInfo ofTypes)? list,
-    TResult? Function()? dateTime,
     TResult? Function(String typeName)? custom,
   }) {
     return primitive?.call();
@@ -147,7 +139,6 @@ class _$_Primitive implements _Primitive {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primitive,
     TResult Function(TypeInfo ofTypes)? list,
-    TResult Function()? dateTime,
     TResult Function(String typeName)? custom,
     required TResult orElse(),
   }) {
@@ -162,7 +153,6 @@ class _$_Primitive implements _Primitive {
   TResult map<TResult extends Object?>({
     required TResult Function(_Primitive value) primitive,
     required TResult Function(_List value) list,
-    required TResult Function(_DateTime value) dateTime,
     required TResult Function(_Custom value) custom,
   }) {
     return primitive(this);
@@ -173,7 +163,6 @@ class _$_Primitive implements _Primitive {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Primitive value)? primitive,
     TResult? Function(_List value)? list,
-    TResult? Function(_DateTime value)? dateTime,
     TResult? Function(_Custom value)? custom,
   }) {
     return primitive?.call(this);
@@ -184,7 +173,6 @@ class _$_Primitive implements _Primitive {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Primitive value)? primitive,
     TResult Function(_List value)? list,
-    TResult Function(_DateTime value)? dateTime,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) {
@@ -272,7 +260,6 @@ class _$_List implements _List {
   TResult when<TResult extends Object?>({
     required TResult Function() primitive,
     required TResult Function(TypeInfo ofTypes) list,
-    required TResult Function() dateTime,
     required TResult Function(String typeName) custom,
   }) {
     return list(ofTypes);
@@ -283,7 +270,6 @@ class _$_List implements _List {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? primitive,
     TResult? Function(TypeInfo ofTypes)? list,
-    TResult? Function()? dateTime,
     TResult? Function(String typeName)? custom,
   }) {
     return list?.call(ofTypes);
@@ -294,7 +280,6 @@ class _$_List implements _List {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primitive,
     TResult Function(TypeInfo ofTypes)? list,
-    TResult Function()? dateTime,
     TResult Function(String typeName)? custom,
     required TResult orElse(),
   }) {
@@ -309,7 +294,6 @@ class _$_List implements _List {
   TResult map<TResult extends Object?>({
     required TResult Function(_Primitive value) primitive,
     required TResult Function(_List value) list,
-    required TResult Function(_DateTime value) dateTime,
     required TResult Function(_Custom value) custom,
   }) {
     return list(this);
@@ -320,7 +304,6 @@ class _$_List implements _List {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Primitive value)? primitive,
     TResult? Function(_List value)? list,
-    TResult? Function(_DateTime value)? dateTime,
     TResult? Function(_Custom value)? custom,
   }) {
     return list?.call(this);
@@ -331,7 +314,6 @@ class _$_List implements _List {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Primitive value)? primitive,
     TResult Function(_List value)? list,
-    TResult Function(_DateTime value)? dateTime,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) {
@@ -348,120 +330,6 @@ abstract class _List implements TypeInfo {
   TypeInfo get ofTypes;
   @JsonKey(ignore: true)
   _$$_ListCopyWith<_$_List> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_DateTimeCopyWith<$Res> {
-  factory _$$_DateTimeCopyWith(
-          _$_DateTime value, $Res Function(_$_DateTime) then) =
-      __$$_DateTimeCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_DateTimeCopyWithImpl<$Res>
-    extends _$TypeInfoCopyWithImpl<$Res, _$_DateTime>
-    implements _$$_DateTimeCopyWith<$Res> {
-  __$$_DateTimeCopyWithImpl(
-      _$_DateTime _value, $Res Function(_$_DateTime) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_DateTime implements _DateTime {
-  const _$_DateTime();
-
-  @override
-  String toString() {
-    return 'TypeInfo.dateTime()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_DateTime);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() primitive,
-    required TResult Function(TypeInfo ofTypes) list,
-    required TResult Function() dateTime,
-    required TResult Function(String typeName) custom,
-  }) {
-    return dateTime();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? primitive,
-    TResult? Function(TypeInfo ofTypes)? list,
-    TResult? Function()? dateTime,
-    TResult? Function(String typeName)? custom,
-  }) {
-    return dateTime?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? primitive,
-    TResult Function(TypeInfo ofTypes)? list,
-    TResult Function()? dateTime,
-    TResult Function(String typeName)? custom,
-    required TResult orElse(),
-  }) {
-    if (dateTime != null) {
-      return dateTime();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Primitive value) primitive,
-    required TResult Function(_List value) list,
-    required TResult Function(_DateTime value) dateTime,
-    required TResult Function(_Custom value) custom,
-  }) {
-    return dateTime(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Primitive value)? primitive,
-    TResult? Function(_List value)? list,
-    TResult? Function(_DateTime value)? dateTime,
-    TResult? Function(_Custom value)? custom,
-  }) {
-    return dateTime?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Primitive value)? primitive,
-    TResult Function(_List value)? list,
-    TResult Function(_DateTime value)? dateTime,
-    TResult Function(_Custom value)? custom,
-    required TResult orElse(),
-  }) {
-    if (dateTime != null) {
-      return dateTime(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _DateTime implements TypeInfo {
-  const factory _DateTime() = _$_DateTime;
 }
 
 /// @nodoc
@@ -529,7 +397,6 @@ class _$_Custom implements _Custom {
   TResult when<TResult extends Object?>({
     required TResult Function() primitive,
     required TResult Function(TypeInfo ofTypes) list,
-    required TResult Function() dateTime,
     required TResult Function(String typeName) custom,
   }) {
     return custom(typeName);
@@ -540,7 +407,6 @@ class _$_Custom implements _Custom {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? primitive,
     TResult? Function(TypeInfo ofTypes)? list,
-    TResult? Function()? dateTime,
     TResult? Function(String typeName)? custom,
   }) {
     return custom?.call(typeName);
@@ -551,7 +417,6 @@ class _$_Custom implements _Custom {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primitive,
     TResult Function(TypeInfo ofTypes)? list,
-    TResult Function()? dateTime,
     TResult Function(String typeName)? custom,
     required TResult orElse(),
   }) {
@@ -566,7 +431,6 @@ class _$_Custom implements _Custom {
   TResult map<TResult extends Object?>({
     required TResult Function(_Primitive value) primitive,
     required TResult Function(_List value) list,
-    required TResult Function(_DateTime value) dateTime,
     required TResult Function(_Custom value) custom,
   }) {
     return custom(this);
@@ -577,7 +441,6 @@ class _$_Custom implements _Custom {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Primitive value)? primitive,
     TResult? Function(_List value)? list,
-    TResult? Function(_DateTime value)? dateTime,
     TResult? Function(_Custom value)? custom,
   }) {
     return custom?.call(this);
@@ -588,7 +451,6 @@ class _$_Custom implements _Custom {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Primitive value)? primitive,
     TResult Function(_List value)? list,
-    TResult Function(_DateTime value)? dateTime,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) {

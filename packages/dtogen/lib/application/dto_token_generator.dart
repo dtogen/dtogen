@@ -28,14 +28,20 @@ class DtoTokenGenerator extends ITokenGenerator {
     final fields = dartClass.fields;
     return [
       if (addImports) ...[
-        const DartToken.import(path: 'package:json_serializable/json_serializable.dart'),
-        if (settings.generateHiveAnnotations) const DartToken.import(path: 'package:hive/hive.dart'),
+        const DartToken.import(
+          path: 'package:json_serializable/json_serializable.dart',
+        ),
+        if (settings.generateHiveAnnotations)
+          const DartToken.import(path: 'package:hive/hive.dart'),
       ],
       DartToken.classDeclaration(
         name: name,
         annotations: [
-          if (settings.generateHiveAnnotations) const AnnotationToken(name: 'HiveType(typeId: -1)'),
-          AnnotationToken(name: 'JsonSerializable(${jsonSerializableArgs.join(', ')})'),
+          if (settings.generateHiveAnnotations)
+            const AnnotationToken(name: 'HiveType(typeId: -1)'),
+          AnnotationToken(
+            name: 'JsonSerializable(${jsonSerializableArgs.join(', ')})',
+          ),
         ],
         fields: [
           for (var i = 0; i < fields.length; i++)
@@ -43,7 +49,8 @@ class DtoTokenGenerator extends ITokenGenerator {
               name: fields[i].name,
               type: ReferenceToken(name: fields[i].typeName),
               annotations: [
-                if (settings.generateHiveAnnotations) AnnotationToken(name: 'HiveField($i)'),
+                if (settings.generateHiveAnnotations)
+                  AnnotationToken(name: 'HiveField($i)'),
               ],
               isNullable: fields[i].isNullable,
             ),
@@ -53,19 +60,26 @@ class DtoTokenGenerator extends ITokenGenerator {
             FactoryToken(
               name: 'fromJson',
               parameters: [
-                const FieldToken(name: 'json', type: ReferenceToken(name: 'Map<String, dynamic>')),
+                const FieldToken(
+                  name: 'json',
+                  type: ReferenceToken(name: 'Map<String, dynamic>'),
+                ),
               ],
               isLambda: true,
               methodText: '_\$${name}FromJson(json)',
             ),
-          if (generateFromEntity)
+          if (generateEntityMappers && generateFromEntity)
             FactoryToken(
               name: 'fromEntity',
               parameters: [
-                FieldToken(name: 'entity', type: ReferenceToken(name: dartClass.name)),
+                FieldToken(
+                  name: 'entity',
+                  type: ReferenceToken(name: dartClass.name),
+                ),
               ],
               isLambda: false,
-              methodText: 'return $name(${dartClass.fields.map(_fromEntityFieldMapper).join(', ')},);',
+              methodText:
+                  'return $name(${dartClass.fields.map(_fromEntityFieldMapper).join(', ')},);',
             ),
         ],
         methods: [
@@ -80,7 +94,8 @@ class DtoTokenGenerator extends ITokenGenerator {
             MethodToken(
               returnType: ReferenceToken(name: dartClass.name),
               name: 'toEntity',
-              methodText: 'return ${dartClass.name}(${dartClass.fields.map(_toEntityFieldMapper).join(', ')},);',
+              methodText:
+                  'return ${dartClass.name}(${dartClass.fields.map(_toEntityFieldMapper).join(', ')},);',
             ),
         ],
       ),
@@ -92,14 +107,10 @@ class DtoTokenGenerator extends ITokenGenerator {
     return field.typeInfo.when(
       primitive: () => '${field.name}: ${field.name}',
       custom: (_) => '${field.name}: ${field.name}$methodNullAware.toEntity()',
-      dateTime: () {
-        final nullCheckPrefix = field.isNullable ? '${field.name} == null ? null : ' : '';
-        return '${field.name}: ${nullCheckPrefix}DateTime.parse(${field.name})';
-      },
       list: (type) {
         return type.maybeWhen(
-          custom: (_) => '${field.name}: ${field.name}$methodNullAware.map((e) => e.toEntity()).toList()',
-          dateTime: () => '${field.name}: ${field.name}$methodNullAware.map(DateTime.parse).toList()',
+          custom: (_) =>
+              '${field.name}: ${field.name}$methodNullAware.map((e) => e.toEntity()).toList()',
           orElse: () => '${field.name}: ${field.name}',
         );
       },
@@ -109,21 +120,22 @@ class DtoTokenGenerator extends ITokenGenerator {
   String _fromEntityFieldMapper(DartClassField field) {
     final entityField = 'entity.${field.name}';
     final methodNullAware = field.isNullable ? '?' : '';
-    final nullCheckPrefix = field.isNullable ? '$entityField == null ? null : ' : '';
+    final nullCheckPrefix =
+        field.isNullable ? '$entityField == null ? null : ' : '';
     return field.typeInfo.when(
       primitive: () => '${field.name}: $entityField',
       custom: (_) {
-        final customFieldMapper = '${field.typeName}Dto.fromEntity($entityField)';
+        final customFieldMapper =
+            '${field.typeName}Dto.fromEntity($entityField)';
         if (field.isNullable) {
           return '${field.name}: $nullCheckPrefix${field.typeName}Dto.fromEntity($entityField!)';
         }
         return '${field.name}: $customFieldMapper';
       },
-      dateTime: () => '${field.name}: $entityField$methodNullAware.toString()',
       list: (type) {
         return type.maybeWhen(
-          custom: (typeName) => '${field.name}: $entityField$methodNullAware.map(${typeName}Dto.fromEntity).toList()',
-          dateTime: () => '${field.name}: $entityField$methodNullAware.map((e) => t.toString()).toList()',
+          custom: (typeName) =>
+              '${field.name}: $entityField$methodNullAware.map(${typeName}Dto.fromEntity).toList()',
           orElse: () => '${field.name}: $entityField',
         );
       },

@@ -4,7 +4,7 @@ part 'type_string_extensions.freezed.dart';
 
 extension TypeStringExtensions on String {
   TypeInfo get typeInfo {
-    const primitiveTypes = {'int', 'double', 'bool', 'String'};
+    const primitiveTypes = {'int', 'double', 'bool', 'String', 'DateTime'};
 
     final isPrimitive = primitiveTypes.contains(this);
 
@@ -14,8 +14,6 @@ extension TypeStringExtensions on String {
       return TypeInfo.list(
         ofTypes: replaceFirst('List<', '').replaceFirst('>', '').typeInfo,
       );
-    } else if (this == 'DateTime') {
-      return const TypeInfo.dateTime();
     } else {
       return TypeInfo.custom(this);
     }
@@ -62,6 +60,5 @@ extension TypeStringExtensions on String {
 class TypeInfo with _$TypeInfo {
   const factory TypeInfo.primitive() = _Primitive;
   const factory TypeInfo.list({required TypeInfo ofTypes}) = _List;
-  const factory TypeInfo.dateTime() = _DateTime;
   const factory TypeInfo.custom(String typeName) = _Custom;
 }
