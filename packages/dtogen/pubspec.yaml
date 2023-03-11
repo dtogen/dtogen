@@ -1,6 +1,6 @@
 name: dtogen
 description: A command-line app which is used to generate DTOs and Entities from json
-version: 1.0.0
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.17.3 <3.0.0"
