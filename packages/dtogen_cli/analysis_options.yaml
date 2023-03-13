@@ -1,8 +1,0 @@
-include: package:dtogen_lints/dtogen.yaml
-analyzer:
-  exclude:
-    - example/**
-
-linter:
-  rules:
-    - avoid_print: false

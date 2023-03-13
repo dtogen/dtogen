@@ -1,6 +1,0 @@
-include: package:dtogen_lints/dtogen.yaml
-
-analyzer:
-  errors:
-    # Let every widget have an optional `key` parameter in the constructor.
-    unused_element: ignore
