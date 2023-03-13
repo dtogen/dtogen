@@ -54,28 +54,35 @@ class _GeneratorViewState extends State<GeneratorView> {
             Expanded(
               child: Column(
                 children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextBox(
-                        controller: _inputCodeController,
-                        header: 'Input',
-                        minLines: minLines,
-                        maxLines: null,
-                        style: const TextStyle(
-                          fontFamily: 'Roboto Mono',
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: TextBox(
+                              controller: _inputCodeController,
+                              header: 'Input',
+                              minLines: minLines,
+                              maxLines: null,
+                              style: const TextStyle(
+                                fontFamily: 'Roboto Mono',
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        _GeneratorActionButtons(
+                          inputController: _inputCodeController,
+                        ),
+                      ],
                     ),
-                  ),
-                  _GeneratorActionButtons(
-                    inputController: _inputCodeController,
                   ),
                   const SizedBox(height: 8),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: SettingsView(),
                   ),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
