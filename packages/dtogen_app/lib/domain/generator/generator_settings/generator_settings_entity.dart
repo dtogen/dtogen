@@ -57,6 +57,10 @@ class GeneratorSettings extends Equatable {
         if (generateEntity) ModelType.entity,
       },
       prefixName: prefix,
+
+      // TODO(f-person): Figure out if the way this works is good enough.
+      // And if not, maybe modify the core to support this better.
+      splitByFiles: generateImports,
     );
   }
 
