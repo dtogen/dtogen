@@ -53,6 +53,7 @@ class _GeneratorViewState extends State<GeneratorView> {
           children: [
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
@@ -75,6 +76,14 @@ class _GeneratorViewState extends State<GeneratorView> {
                           inputController: _inputCodeController,
                         ),
                       ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Text(
+                      'Generation Settings',
+                      style: FluentTheme.of(context).typography.subtitle,
                     ),
                   ),
                   const SizedBox(height: 8),
