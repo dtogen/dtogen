@@ -1,9 +1,0 @@
-name: dtogen_lints
-description: Lint rules for dtogen packages
-version: 1.0.0
-
-environment:
-  sdk: ">=2.17.3 <3.0.0"
-
-dependencies:
-  all_lint_rules_community: ^0.0.22
