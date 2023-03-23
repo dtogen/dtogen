@@ -16,6 +16,7 @@ Future<void> main() async {
 
     await SystemTheme.accentColor.load();
     await _maybeSetupWindowSize();
+    await _maybeSetWindowTitle();
   } finally {
     // Don't let the failure of these operations block the app from starting.
   }
@@ -39,6 +40,12 @@ Future<void> _maybeSetupWindowSize() async {
 
   if (_checkIsDesktop()) {
     await windowManager.setMinimumSize(minSize);
+  }
+}
+
+Future<void> _maybeSetWindowTitle() async {
+  if (_checkIsDesktop()) {
+    await windowManager.setTitle('DTO Gen');
   }
 }
 
