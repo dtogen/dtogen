@@ -29,7 +29,7 @@ class DtoTokenGenerator extends ITokenGenerator {
     return [
       if (addImports) ...[
         const DartToken.import(
-          path: 'package:json_serializable/json_serializable.dart',
+          path: 'package:json_annotation/json_annotation.dart',
         ),
         if (settings.generateHiveAnnotations)
           const DartToken.import(path: 'package:hive/hive.dart'),
